@@ -1,0 +1,65 @@
+extends layout
+
+block content
+  .jumbotron
+    .container
+      /////////////////////////////////////////////////////////////
+      // Header
+      h1 Albums of the Day
+      /////////////////////////////////////////////////////////////
+      // Table
+      table.table.table-striped(style='border-collapse:collapse;')
+        if albumlist
+          each album, i in albumlist
+            /////////////////////////////////////////////////////////////
+            // Visible 
+            // ROW1 COL1=CoverArt, COL2=Title/Artist/Genre/Button
+            tr.accordion-toggle(data-toggle='collapse', data-target='#demo#{i}')
+              td
+                img(src=album.cover_art, alt=album.Title, style='width:175px;height:175px;')
+              td
+               h3= album.Title
+               p
+               h4= album.Artist
+               p
+               h5= album.Genre
+               p
+               button.btn.btn-default.btn-xs
+                 span.glyphicon.glyphicon-eye-open
+            /////////////////////////////////////////////////////////////
+            // Collapsing
+            // ROW1 COL1=Date COL2=RecommendedBy COL3=TopTracks
+            // ROW2 COL1=Comments
+            tr
+              td.hiddenRow(colspan='12')
+                .accordian-body.collapse(id='demo#{i}')
+                  table.table.table-striped
+                    //////////////////////////////////////////////////////
+                    // ROW1 COL1=Date COL2=RecommendedBy COL3=TopTracks
+                    thead
+                      tr
+                        th(style='width:150px') Date
+                        th(style='width:250px') Recommended By
+                        if album.TopTracks
+                          th Top Tracks
+                        else
+                          th
+                    tbody
+                      tr
+                        td= album.DateRecommended
+                        td= album.RecommendedBy
+                        td
+                          if album.TopTracks
+                            each track in album.TopTracks
+                              iframe(src="https://embed.spotify.com/?uri=spotify:track:#{track[1]}" width="300" height="80" frameborder="0" allowtransparency="true")
+                    //////////////////////////////////////////////////////
+                    // ROW2 COL1=Comments
+                    if album.Amazon
+                      thead
+                        tr
+                          th Comments
+                      tbody
+                        each comment in album.Amazon
+                          tr
+                            td(colspan='3')= comment
+                    //////////////////////////////////////////////////////

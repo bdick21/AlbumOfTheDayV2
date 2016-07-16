@@ -1,0 +1,33 @@
+block emailBody
+  - for album in albums
+      style.
+        /* List with Thumbnails & Summary Stacked Pattern CSS */
+        @media only screen and (max-width: 599px) {
+        td[class="pattern"] table { width: 100%; }
+        td[class="pattern"] img { width: 100%; height: auto !important; }
+        td[class="pattern"] .col td { width: 70%; padding-right: 0 !important; }
+        td[class="pattern"] .col td:first-child { width: 30%; }
+        }
+        @media only screen and (max-width: 450px) {
+        td[class="pattern"] img { width: 160px; margin: 0 auto; }
+        td[class="pattern"] .col td,
+        td[class="pattern"] .col td:first-child { width: 100%; display: block; text-align: center; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+        td[class="pattern"] td.description { padding: 10px 18px 20px 18px !important; }
+        td[class="pattern"] td.description strong { font-size: 20px; }
+        }
+
+      table(cellpadding='0', cellspacing='0')
+        tr
+          td.pattern(width='600')
+            table(cellpadding='0', cellspacing='0')
+        
+              tr.row
+                td.col(valign='top', width='600', style='padding-bottom: 20px;')
+                  table(cellpadding='0', cellspacing='0')
+                    tr
+                      td(align='left', valign='top')
+                        img(src=album.cover_art, alt=album.Title, style='display: block; border: 0; width: 175px; height: 175px;')
+                      td.description(align='left', valign='middle', style='font-family: arial,sans-serif; font-size: 16px; color: #333; padding: 0 16px;')
+                        strong(style='line-height: 30px !important;')= album.Title
+                        p(style='padding-bottom: 10px; font-size: 14px;')= album.Artist
+//                      a(href='#', style='display: block; text-decoration: none; font-weight: bold;')= album.Genre
